@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAHP · Marc · Leader Bewerbung</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#080a0f;
+  --bg2:#0d1018;
+  --bg3:#131720;
+  --card:#161b26;
+  --border:#1e2535;
+  --border2:#2a3348;
+  --gold:#e8b84b;
+  --gold2:rgba(232,184,75,0.12);
+  --gold3:rgba(232,184,75,0.06);
+  --text:#c8cdd8;
+  --text2:#7a8399;
+  --text3:#4a5166;
+  --white:#f0f2f8;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:15px;line-height:1.7;overflow-x:hidden}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--gold);border-radius:2px}
+
+/* ── HERO ── */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative;padding:2rem;overflow:hidden}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(232,184,75,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(232,184,75,0.04) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 40%,transparent 100%)}
+.hero-glow{position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(232,184,75,0.08) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none}
+.hero-tag{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:1.5rem;opacity:.8}
+.hero-tag span{color:var(--text3)}
+.hero-title{font-size:clamp(3.5rem,10vw,8rem);font-weight:700;letter-spacing:-2px;line-height:.95;color:var(--white);margin-bottom:.5rem}
+.hero-title .gold{color:var(--gold)}
+.hero-sub{font-size:clamp(1rem,2vw,1.4rem);font-weight:300;color:var(--text2);margin-bottom:2.5rem;letter-spacing:1px}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:var(--gold2);border:1px solid rgba(232,184,75,0.25);color:var(--gold);font-size:12px;letter-spacing:2px;text-transform:uppercase;padding:.5rem 1.25rem;margin-bottom:1.5rem}
+
+.hero-info{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin-bottom:1rem;font-family:'Space Mono',monospace;font-size:12px;color:var(--text2)}
+.hero-info span{color:var(--text3)}
+.hero-info strong{color:var(--white)}
+
+.hero-stats{display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;margin-bottom:3rem;max-width:700px}
+.stat{background:var(--card);border:1px solid var(--border);padding:.6rem 1.25rem;display:flex;flex-direction:column;align-items:center;gap:2px;min-width:110px}
+.stat-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text3)}
+.stat-value{font-size:13px;font-weight:600;color:var(--white)}
+
+.scroll-hint{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.5rem;color:var(--text3);font-size:11px;letter-spacing:2px;text-transform:uppercase;animation:bob 2s ease-in-out infinite}
+.scroll-hint::after{content:'↓';font-size:1.2rem;color:var(--gold)}
+@keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(6px)}}
+
+/* ── NAV ── */
+nav{position:sticky;top:0;z-index:200;background:rgba(8,10,15,0.93);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-wrap:wrap;padding:.1rem 0}
+nav a{color:var(--text2);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;padding:.7rem 1rem;text-decoration:none;transition:color .2s;font-family:'Space Mono',monospace}
+nav a:hover{color:var(--gold)}
+
+/* ── MAIN ── */
+main{max-width:920px;margin:0 auto;padding:0 2rem 6rem}
+
+/* ── SECTION ── */
+.sec{padding:5rem 0 0;opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.sec.visible{opacity:1;transform:translateY(0)}
+.sec-num{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:3px;color:var(--text3);margin-bottom:.75rem}
+.sec-title{font-size:clamp(1.6rem,4vw,2.4rem);font-weight:700;color:var(--white);margin-bottom:2rem;letter-spacing:-.5px}
+.sec-title .gold{color:var(--gold)}
+.divider{height:1px;background:var(--border);margin-top:5rem}
+
+/* ── PROFIL GRID ── */
+.profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);margin-bottom:2rem}
+@media(max-width:560px){.profile-grid{grid-template-columns:1fr}}
+.profile-row{background:var(--card);padding:1rem 1.25rem;display:flex;flex-direction:column;gap:3px}
+.p-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text3)}
+.p-value{font-size:14px;font-weight:600;color:var(--white)}
+
+/* ── ERFAHRUNGS-SPALTEN ── */
+.exp-cols{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:2rem}
+@media(max-width:620px){.exp-cols{grid-template-columns:1fr}}
+.exp-col-title{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);padding:.4rem .75rem;border-bottom:1px solid var(--border);margin-bottom:0}
+.exp-list{border:1px solid var(--border)}
+.exp-list-head{background:var(--bg3);padding:.4rem .75rem}
+.exp-row{display:flex;justify-content:space-between;align-items:center;padding:.55rem .75rem;border-bottom:1px solid var(--border);background:var(--card);font-size:13.5px;gap:.5rem;transition:background .15s}
+.exp-row:last-child{border-bottom:none}
+.exp-row:hover{background:var(--bg3)}
+.exp-org{color:var(--text);flex:1}
+.badge{display:inline-block;font-size:10px;letter-spacing:1px;text-transform:uppercase;padding:.2rem .55rem;font-family:'Space Mono',monospace;white-space:nowrap}
+.badge.crime{background:rgba(239,68,68,0.15);color:#f87171;border:1px solid rgba(239,68,68,0.2)}
+.badge.state{background:rgba(59,130,246,0.15);color:#93c5fd;border:1px solid rgba(59,130,246,0.2)}
+.badge.gold-b{background:var(--gold2);color:var(--gold);border:1px solid rgba(232,184,75,0.25)}
+
+/* ── TAGS ── */
+.tags{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.5rem}
+.tag{font-size:11px;letter-spacing:1px;padding:.3rem .8rem;border:1px solid var(--border2);color:var(--text2);cursor:default;transition:border-color .2s,color .2s}
+.tag:hover{border-color:var(--gold);color:var(--gold)}
+
+/* ── TEXT ── */
+.body-text{font-size:15px;line-height:1.9;color:var(--text);margin-bottom:1.25rem}
+.body-text strong{color:var(--white);font-weight:600}
+
+/* ── RP KACHELN ── */
+.rp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1px;background:var(--border);border:1px solid var(--border)}
+.rp-card{background:var(--card);padding:1.5rem;transition:background .2s}
+.rp-card:hover{background:var(--bg3)}
+.rp-num{font-family:'Space Mono',monospace;font-size:2rem;font-weight:700;color:var(--border2);line-height:1;margin-bottom:.75rem}
+.rp-card-title{font-size:14px;font-weight:600;color:var(--white);margin-bottom:.5rem}
+.rp-card p{font-size:13px;color:var(--text2);line-height:1.75}
+
+/* ── ABTEILUNGEN ── */
+.dept-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;background:var(--border);border:1px solid var(--border)}
+.dept-card{background:var(--card);padding:1.4rem;border-top:2px solid var(--gold);transition:background .2s}
+.dept-card:hover{background:var(--bg3)}
+.dept-abbr{font-family:'Space Mono',monospace;font-size:1.4rem;font-weight:700;color:var(--gold);line-height:1;margin-bottom:.3rem}
+.dept-name{font-size:11px;letter-spacing:1px;color:var(--text3);margin-bottom:.6rem;text-transform:uppercase}
+.dept-desc{font-size:13px;color:var(--text2);line-height:1.7}
+
+/* ── RANG ── */
+.rank-tier{margin-bottom:1.75rem}
+.rank-tier-head{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;background:var(--bg3);border:1px solid var(--border);border-bottom:none;color:var(--gold);padding:.5rem 1rem}
+.rank-tier-body{border:1px solid var(--border)}
+.rank-row{display:flex;align-items:center;gap:.75rem;padding:.5rem 1rem;border-bottom:1px solid var(--border);background:var(--card);transition:background .15s}
+.rank-row:last-child{border-bottom:none}
+.rank-row:hover{background:var(--bg3)}
+.rnum{font-family:'Space Mono',monospace;font-size:1rem;color:var(--gold);min-width:28px;font-weight:700}
+.rname{color:var(--text);flex:1;font-size:13.5px}
+.rdesc{font-size:11px;color:var(--text3);font-style:italic}
+.rtag{font-size:10px;letter-spacing:1px;font-family:'Space Mono',monospace;padding:.15rem .5rem}
+.rtag.sp{background:rgba(59,130,246,0.12);color:#93c5fd;border:1px solid rgba(59,130,246,0.2)}
+.rtag.tow{background:rgba(234,179,8,0.12);color:#fde047;border:1px solid rgba(234,179,8,0.2)}
+
+/* ── KRITERIEN ── */
+.criteria{list-style:none;display:flex;flex-direction:column;gap:.5rem}
+.criteria li{display:flex;align-items:flex-start;gap:.75rem;padding:.75rem 1rem;background:var(--card);border:1px solid var(--border);font-size:14px;color:var(--text);transition:border-color .2s}
+.criteria li:hover{border-color:var(--gold)}
+.criteria li::before{content:'→';color:var(--gold);font-family:'Space Mono',monospace;flex-shrink:0;margin-top:1px}
+
+/* ── FAQ ── */
+.faq{display:flex;flex-direction:column;gap:.5rem}
+.faq-item{border:1px solid var(--border);background:var(--card)}
+.faq-q{width:100%;text-align:left;background:none;border:none;color:var(--white);font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;padding:1rem 1.25rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:1rem;transition:color .2s}
+.faq-q:hover{color:var(--gold)}
+.faq-icon{color:var(--gold);font-size:1.2rem;transition:transform .25s;flex-shrink:0;font-style:normal}
+.faq-icon.open{transform:rotate(45deg)}
+.faq-a{display:none;padding:.1rem 1.25rem 1.1rem;font-size:13.5px;color:var(--text2);line-height:1.8;border-top:1px solid var(--border)}
+.faq-a.open{display:block}
+.faq-a strong{color:var(--white)}
+.pct-bar{height:3px;background:var(--border);margin-top:1.5rem;overflow:hidden}
+.pct-fill{height:100%;background:var(--gold);width:0%;transition:width 1.2s ease}
+.pct-label{display:flex;justify-content:space-between;font-size:11px;color:var(--text3);margin-top:.4rem;font-family:'Space Mono',monospace}
+
+/* ── FOOTER ── */
+footer{background:var(--bg2);border-top:1px solid var(--border);text-align:center;padding:3rem 2rem;margin-top:5rem}
+.footer-logo{font-family:'Space Mono',monospace;font-size:1.5rem;font-weight:700;color:var(--gold);letter-spacing:3px;margin-bottom:1rem}
+footer p{font-size:13px;color:var(--text3);line-height:2}
+footer strong{color:var(--text2)}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.hero>*{animation:fadeUp .7s ease both}
+.hero-tag{animation-delay:.1s}.hero-title{animation-delay:.2s}.hero-sub{animation-delay:.3s}
+.hero-badge{animation-delay:.4s}.hero-info{animation-delay:.45s}.hero-stats{animation-delay:.5s}.scroll-hint{animation-delay:.7s}
+</style>
+</head>
+<body>
+
+<!-- ══ HERO ══ -->
+<header class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-tag"><span>// Grand RP · 2026 · </span>SAHP</div>
+  <div class="hero-title"><span class="gold">SAHP</span></div>
+  <div class="hero-sub">Leader Bewerbung</div>
+  <div class="hero-badge">✦ Bewerbung eingereicht</div>
+  <div class="hero-info">
+    Bewerbung als <strong style="color:var(--gold);margin:0 .3rem">LEADER</strong> <span style="margin:0 .3rem">der Organisation</span>
+  </div>
+  <div class="hero-info" style="margin-bottom:1.5rem">
+    <span>OOC →</span> <strong>Marc</strong> &nbsp;·&nbsp;
+    <span>IC →</span> <strong>Michael Kalash</strong> &nbsp;·&nbsp;
+    <span>ID →</span> <strong>#243336</strong> &nbsp;·&nbsp;
+    <span>Discord →</span> <strong>0xmarcx0</strong> &nbsp;·&nbsp;
+    <span>Visum → <strong>k.A.</strong>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><span class="stat-label">OOC</span><span class="stat-value">Marc</span></div>
+    <div class="stat"><span class="stat-label">IC Name</span><span class="stat-value">Michael Kalash</span></div>
+    <div class="stat"><span class="stat-label">ID</span><span class="stat-value">#243336</span></div>
+    <div class="stat"><span class="stat-label">Discord</span><span class="stat-value">0xmarcx0</span></div>
+    <div class="stat"><span class="stat-label">Visum</span><span class="stat-value">k.A.</span></div>
+    <div class="stat"><span class="stat-label">Alter OOC</span><span class="stat-value">18</span></div>
+    <div class="stat"><span class="stat-label">Erfahrung</span><span class="stat-value">~2 Jahre</span></div>
+  </div>
+  <div class="scroll-hint">Scroll</div>
+</header>
+
+<!-- ══ NAV ══ -->
+<nav>
+  <a href="#about">Über mich</a>
+  <a href="#warum">Warum Leader</a>
+  <a href="#rp">RP Konzept</a>
+  <a href="#qualitaet">Qualitäten</a>
+  <a href="#ranks">Rangkonzept</a>
+  <a href="#abteilungen">Abteilungen</a>
+  <a href="#beitritt">Beitritt</a>
+  <a href="#leitfaden">Leitfaden</a>
+</nav>
+
+<main>
+
+  <!-- ══ 01 ÜBER MICH ══ -->
+  <section class="sec" id="about">
+    <div class="sec-num">01</div>
+    <h2 class="sec-title">Über <span class="gold">mich</span></h2>
+
+    <div class="profile-grid">
+      <div class="profile-row"><span class="p-label">Name (OOC)</span><span class="p-value">Marc</span></div>
+      <div class="profile-row"><span class="p-label">IC Name</span><span class="p-value">Michael Kalash</span></div>
+      <div class="profile-row"><span class="p-label">ID</span><span class="p-value">#243336</span></div>
+      <div class="profile-row"><span class="p-label">Discord</span><span class="p-value">0xmarcx0</span></div>
+      <div class="profile-row"><span class="p-label">Visum</span><span class="p-value">k.A.</span></div>
+      <div class="profile-row"><span class="p-label">Erfahrung</span><span class="p-value">~2 Jahre auf Grand RP</span></div>
+    </div>
+
+    <div class="exp-cols">
+      <!-- Crime -->
+      <div class="exp-list">
+        <div class="exp-list-head"><div class="exp-col-title">Crime</div></div>
+        <div class="exp-row"><span class="exp-org">Los Santos Vagos</span><span class="badge crime">Vize</span></div>
+        <div class="exp-row"><span class="exp-org">Los Santos Vagos</span><span class="badge crime">Vize</span></div>
+        <div class="exp-row"><span class="exp-org">Los Santos Vagos</span><span class="badge crime">Vize</span></div>
+        <div class="exp-row"><span class="exp-org">Bloods</span><span class="badge crime">Ausbildungsleitung</span></div>
+        <div class="exp-row"><span class="exp-org">Grove Street Families</span><span class="badge crime">Ausbildungsleitung</span></div>
+        <div class="exp-row"><span class="exp-org">Grove Street Families</span><span class="badge crime">Ausbildungsleitung</span></div>
+        <div class="exp-row"><span class="exp-org">Ballas</span><span class="badge crime">Ausbildungsleitung</span></div>
+        <div class="exp-row"><span class="exp-org">Marabunta Grande</span><span class="badge crime">Ausbildungsleitung</span></div>
+      </div>
+      <!-- State -->
+      <div class="exp-list">
+        <div class="exp-list-head"><div class="exp-col-title">State</div></div>
+        <div class="exp-row"><span class="exp-org">Nationale Garde (NG)</span><span class="badge state">Rang 16</span></div>
+        <div class="exp-row"><span class="exp-org">USSS</span><span class="badge state">Rang 12</span></div>
+        <div class="exp-row"><span class="exp-org">SAHP</span><span class="badge gold-b">Rang 23</span></div>
+        <div class="exp-row"><span class="exp-org">LSPD</span><span class="badge state">Rang 13</span></div>
+        <div class="exp-row"><span class="exp-org">EMS</span><span class="badge state">Rang 12</span></div>
+      </div>
+    </div>
+
+    <div class="tags">
+      <span class="tag">Crime RP</span>
+      <span class="tag">Vize-Leader ×3</span>
+      <span class="tag">Bloods Ausbildungsleitung</span>
+      <span class="tag">NG Erfahrung</span>
+      <span class="tag">State Ränge</span>
+      <span class="tag">Events</span>
+      <span class="tag">Führung</span>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ══ 02 WARUM LEADER ══ -->
+  <section class="sec" id="warum">
+    <div class="sec-num">02</div>
+    <h2 class="sec-title">Warum ich <span class="gold">Leader</span> werden will</h2>
+    <p class="body-text">
+      Ich hab oft versucht in Crime und State nach oben zu kommen — dabei Fehler gemacht, die ich jetzt korrigieren will. In meiner Zeit als High Rank in Crime und State hab ich <strong>starke Führungsstärke</strong> bewiesen. Mein Ziel: das SAHP zur präsentesten und professionellsten State-Organisation auf Grand RP zu machen.
+    </p>
+    <p class="body-text">
+      Als Leader will ich eine Org führen, die <strong>sich bis zum Ende hält</strong> und als positiver Teil der Grand-Geschichte in Erinnerung bleibt. Jeder Beamte soll seine Stärken einbringen können und sich auf die anderen verlassen dürfen — das sichert den Fortbestand der Organisation.
+    </p>
+    <div class="tags">
+      <span class="tag">❤ Zusammenhalt</span>
+      <span class="tag">📈 Wachstum</span>
+      <span class="tag">🛣 Highway-Präsenz</span>
+      <span class="tag">💪 Führung</span>
+      <span class="tag">🤝 Respekt</span>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ══ 03 RP KONZEPT ══ -->
+  <section class="sec" id="rp">
+    <div class="sec-num">03</div>
+    <h2 class="sec-title">RP <span class="gold">Verbesserungen</span></h2>
+    <div class="rp-grid">
+      <div class="rp-card">
+        <div class="rp-num">01</div>
+        <div class="rp-card-title">Aktivität gegen die NG</div>
+        <p>Koordinierte Einsätze am FZ, gemeinsame Raids in Absprache mit anderen State-Orgas. Das SAHP soll eine aktive Rolle auf dem Highway spielen.</p>
+      </div>
+      <div class="rp-card">
+        <div class="rp-num">02</div>
+        <div class="rp-card-title">Präsenz auf dem Highway</div>
+        <p>Aktivere Patrouillen, gutes Verkehrs-RP, sichtbare Präsenz auf Route 68 und Sandy Shores. Wir sollen täglich spürbar sein.</p>
+      </div>
+      <div class="rp-card">
+        <div class="rp-num">03</div>
+        <div class="rp-card-title">Kreativer Einsatz-RP</div>
+        <p>Abwechslungsreiche Situationen abseits der Standard-Verhaftung — damit erkenne ich, wer wirklich RP spielen will.</p>
+      </div>
+      <div class="rp-card">
+        <div class="rp-num">04</div>
+        <div class="rp-card-title">Strengere Aufnahme</div>
+        <p>Selektives Filtern neuer Beamter fördert faires RP. Aktivität und Qualität sind Pflicht, nicht optional.</p>
+      </div>
+      <div class="rp-card">
+        <div class="rp-num">05</div>
+        <div class="rp-card-title">Events &amp; Giveaways</div>
+        <p>Verfolgungsjagd-Übungen, interne Checks und Giveaways für besonderes Engagement — um Beamte aktiv zu halten.</p>
+      </div>
+      <div class="rp-card">
+        <div class="rp-num">06</div>
+        <div class="rp-card-title">Strukturierte Hierarchie</div>
+        <p>Klare Zuständigkeiten — jeder Beamte weiß, wen er bei Problemen ansprechen soll. Kein Rechte-Abuse.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ══ 04 QUALITÄTEN ══ -->
+  <section class="sec" id="qualitaet">
+    <div class="sec-num">04</div>
+    <h2 class="sec-title">Was mich als <span class="gold">Leader auszeichnet</span></h2>
+    <p class="body-text">
+      Was mich als Leader auszeichnet ist vor allem <strong>meine Ruhe und mein Organisationstalent</strong>. Als High Rank in Crime und State hab ich gelernt, in stressigen Situationen einen kühlen Kopf zu bewahren und keine unnötigen Eskalationen zu verursachen.
+    </p>
+    <p class="body-text">
+      Ich fördere aktiv das RP und weiß, wann eine weitere State-Aktion sinnvoll ist. <strong>Jeder Beamte soll spüren, dass er wichtig ist</strong> — ehrlich bewertet, aber immer respektvoll. Gemeinsam mit meinen Abteilungsleitern will ich das SAHP aufbauen und sein volles Potenzial entfalten.
+    </p>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ══ 05 RANGKONZEPT ══ -->
+  <section class="sec" id="ranks">
+    <div class="sec-num">05</div>
+    <h2 class="sec-title">Rang<span class="gold">konzept</span></h2>
+
+    <div class="rank-tier" style="margin-top:1.5rem">
+      <div class="rank-tier-head">Leading Command</div>
+      <div class="rank-tier-body">
+        <div class="rank-row"><span class="rnum">30</span><span class="rname">Sheriff of SAHP</span><span class="rdesc">Leader der Organisation</span></div>
+        <div class="rank-row"><span class="rnum">29</span><span class="rname">Second Sheriff of SAHP</span><span class="rdesc">Zweiter Leader</span></div>
+        <div class="rank-row"><span class="rnum">28</span><span class="rname">Assistant Sheriff of SAHP</span><span class="rdesc">Assistenz der Leitung</span></div>
+      </div>
+    </div>
+
+    <div class="rank-tier">
+      <div class="rank-tier-head">High Command</div>
+      <div class="rank-tier-body">
+        <div class="rank-row"><span class="rnum">27</span><span class="rname">Deputy Sheriff of SAHP</span></div>
+        <div class="rank-row"><span class="rnum">26</span><span class="rname">Commissioner</span></div>
+        <div class="rank-row"><span class="rnum">25</span><span class="rname">Division Chief</span></div>
+        <div class="rank-row"><span class="rnum">24</span><span class="rname">Assistant Division Chief</span></div>
+        <div class="rank-row"><span class="rnum">23</span><span class="rname">Captain</span></div>
+        <div class="rank-row"><span class="rnum">22</span><span class="rname">First Lieutenant</span></div>
+        <div class="rank-row"><span class="rnum">21</span><span class="rname">Lieutenant</span></div>
+      </div>
+    </div>
+
+    <div class="rank-tier">
+      <div class="rank-tier-head">Mid Command</div>
+      <div class="rank-tier-body">
+        <div class="rank-row"><span class="rnum">20</span><span class="rname">Master Sergeant</span></div>
+        <div class="rank-row"><span class="rnum">19</span><span class="rname">First Sergeant</span></div>
+        <div class="rank-row"><span class="rnum">18</span><span class="rname">Sergeant</span></div>
+        <div class="rank-row"><span class="rnum">17</span><span class="rname">Senior Corporal</span></div>
+        <div class="rank-row"><span class="rnum">16</span><span class="rname">Corporal</span></div>
+        <div class="rank-row"><span class="rnum">15</span><span class="rname">State Prison Sergeant</span><span class="rtag sp">SP</span></div>
+        <div class="rank-row"><span class="rnum">14</span><span class="rname">TOW Sergeant</span><span class="rtag tow">TOW</span></div>
+      </div>
+    </div>
+
+    <div class="rank-tier">
+      <div class="rank-tier-head">Low Command</div>
+      <div class="rank-tier-body">
+        <div class="rank-row"><span class="rnum">13</span><span class="rname">Specialist</span></div>
+        <div class="rank-row"><span class="rnum">12</span><span class="rname">Senior Officer</span></div>
+        <div class="rank-row"><span class="rnum">11</span><span class="rname">Officer</span></div>
+        <div class="rank-row"><span class="rnum">10</span><span class="rname">State Prison Officer</span><span class="rtag sp">SP</span></div>
+        <div class="rank-row"><span class="rnum">09</span><span class="rname">TOW Officer</span><span class="rtag tow">TOW</span></div>
+        <div class="rank-row"><span class="rnum">08</span><span class="rname">Junior Officer</span></div>
+        <div class="rank-row"><span class="rnum">07</span><span class="rname">State Prison Junior Officer</span><span class="rtag sp">SP</span></div>
+        <div class="rank-row"><span class="rnum">06</span><span class="rname">TOW Junior Officer</span><span class="rtag tow">TOW</span></div>
+        <div class="rank-row"><span class="rnum">05</span><span class="rname">Trainee</span></div>
+        <div class="rank-row"><span class="rnum">04</span><span class="rname">State Prison Trainee</span><span class="rtag sp">SP</span></div>
+        <div class="rank-row"><span class="rnum">03</span><span class="rname">TOW Trainee</span><span class="rtag tow">TOW</span></div>
+      </div>
+    </div>
+
+    <div class="rank-tier">
+      <div class="rank-tier-head">No Command</div>
+      <div class="rank-tier-body">
+        <div class="rank-row"><span class="rnum">02</span><span class="rname">Suspendiert</span><span class="rdesc">Strafrang</span></div>
+        <div class="rank-row"><span class="rnum">01</span><span class="rname">Besucher</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ══ 06 ABTEILUNGEN ══ -->
+  <section class="sec" id="abteilungen">
+    <div class="sec-num">06</div>
+    <h2 class="sec-title">Ab<span class="gold">teilungen</span></h2>
+    <div class="dept-grid">
+      <div class="dept-card">
+        <div class="dept-abbr">DESU</div>
+        <div class="dept-name">Desert Eagle Special Unit</div>
+        <div class="dept-desc">Taktische Einsätze und Hochrisikosituationen. Die Speerspitze des SAHP außerhalb des regulären Streifendienstes.</div>
+      </div>
+      <div class="dept-card">
+        <div class="dept-abbr">HR</div>
+        <div class="dept-name">Human Resources</div>
+        <div class="dept-desc">Aufnahmen, Beförderungen, Personalverwaltung. Das Rückgrat der Organisation.</div>
+      </div>
+      <div class="dept-card">
+        <div class="dept-abbr">IA</div>
+        <div class="dept-name">Internal Affairs</div>
+        <div class="dept-desc">Interne Kontrolle und Disziplinarverfahren. Unabhängig — ohne IA kein Vertrauen in die Org.</div>
+      </div>
+      <div class="dept-card">
+        <div class="dept-abbr">PA</div>
+        <div class="dept-name">Police Academy</div>
+        <div class="dept-desc">Ausbildung neuer Trainees. Wer hier den Standard setzt, prägt das gesamte SAHP.</div>
+      </div>
+      <div class="dept-card">
+        <div class="dept-abbr">SP</div>
+        <div class="dept-name">State Prison</div>
+        <div class="dept-desc">Verwaltung des Staatsgefängnisses. Eigene Ränge, eigene Verantwortung.</div>
+      </div>
+      <div class="dept-card">
+        <div class="dept-abbr">TOW</div>
+        <div class="dept-name">Abschlepper</div>
+        <div class="dept-desc">Fahrzeugbergung und Straßensicherung. Unverzichtbar für den Highway-Alltag.</div>
+      </div>
+      <div class="dept-card">
+        <div class="dept-abbr">PR</div>
+        <div class="dept-name">Public Relations</div>
+        <div class="dept-desc">Außenwirkung, Community-Kontakt und Events. Das Gesicht des SAHP nach außen.</div>
+      </div>
+      <div class="dept-card">
+        <div class="dept-abbr">CTF</div>
+        <div class="dept-name">Civil Task Force</div>
+        <div class="dept-desc">Zivile Operationen die reguläre Beamte nicht übernehmen können oder sollen.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ══ 07 BEITRITT ══ -->
+  <section class="sec" id="beitritt">
+    <div class="sec-num">07</div>
+    <h2 class="sec-title">Beitritts<span class="gold">kriterien</span></h2>
+    <ul class="criteria">
+      <li>Mindestens Visum Stufe 5</li>
+      <li>Kenntnisse über das Regelwerk</li>
+      <li>Geistige Reife von 15+</li>
+      <li>Aktivität und Interesse an der Orga</li>
+      <li>Ausführliches Gespräch mit Rang 9 oder höher</li>
+      <li>Mindestens 80 % beim Regelwerk-Test</li>
+    </ul>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ══ 08 LEITFADEN ══ -->
+  <section class="sec" id="leitfaden">
+    <div class="sec-num">08</div>
+    <h2 class="sec-title">Ausbildungs<span class="gold">leitfaden</span></h2>
+    <p style="margin-bottom:1.5rem;color:var(--text2);font-size:14px">
+      Zuerst den Reisepass anfordern. Visum unter 5 → wegschicken. Über 5 → Fragen stellen.
+      Abnahme nur durch <strong style="color:var(--white)">Rang 9 oder höher</strong>.
+      Bewerber muss mindestens <strong style="color:var(--gold)">80 %</strong> richtig beantworten.
+    </p>
+
+    <div class="faq">
+      <div class="faq-item">
+        <button class="faq-q" onclick="faq(this)">F01 &nbsp;—&nbsp; Nenne 4 offizielle Greenzones / 2–4 inoffizielle Greenzones. <i class="faq-icon">+</i></button>
+        <div class="faq-a"><strong>Offiziell:</strong> Strandmarkt, Staats-HQs, Anfänger-Jobs, Casino, Post<br><strong>Inoffiziell:</strong> 24/7, Schwarzmarkt, Parkplätze, Geldautomaten</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="faq(this)">F02 &nbsp;—&nbsp; Du wachst im MD auf — wie lange darfst du dich deinem Todesort nicht nähern? <i class="faq-icon">+</i></button>
+        <div class="faq-a"><strong>15 Minuten.</strong></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="faq(this)">F03 &nbsp;—&nbsp; Du wirst von der Polizei verfolgt / hattest eine Schießerei — nach welcher Zeit darfst du das HQ wieder betreten? <i class="faq-icon">+</i></button>
+        <div class="faq-a"><strong>5 Minuten.</strong></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="faq(this)">F04 &nbsp;—&nbsp; Ein Beamter liegt bewusstlos mit Ausrüstung — du findest ihn als Erster. Wie handelst du? <i class="faq-icon">+</i></button>
+        <div class="faq-a"><strong>Aufheben oder Verstärkung rufen.</strong> Wichtig: <strong>NICHT Mercykillen!</strong></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="faq(this)">F05 &nbsp;—&nbsp; Was ist beim Wiederbeleben zu beachten? <i class="faq-icon">+</i></button>
+        <div class="faq-a"><strong>Nicht unter Beschuss wiederbeleben!</strong></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="faq(this)">F06 &nbsp;—&nbsp; Wie lange musst du deine POV abrufbereit haben? <i class="faq-icon">+</i></button>
+        <div class="faq-a">Jedes Mitglied muss seine POV für <strong>48 Stunden</strong> behalten.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="faq(this)">F07 &nbsp;—&nbsp; Welche Dinge sind im HQ verboten? <i class="faq-icon">+</i></button>
+        <div class="faq-a">Beamte im HQ <strong>verletzen, töten oder ausrauben</strong> ist verboten.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="faq(this)">F08 &nbsp;—&nbsp; Was darf man beim FZ und BS nicht machen? <i class="faq-icon">+</i></button>
+        <div class="faq-a"><strong>Fort Zancudo:</strong> LMG · Sniper · Tazer · Highground<br><strong>Bankraub (BS):</strong> LMG · Sniper · Tazer · Wasser vor Event-Beginn betreten</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="faq(this)">F09 &nbsp;—&nbsp; Darf man in Handschellen den IC T-Funk nutzen? <i class="faq-icon">+</i></button>
+        <div class="faq-a"><strong>Nein.</strong></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="faq(this)">F10 &nbsp;—&nbsp; Wie reagiert man, wenn man gezinkt wird? <i class="faq-icon">+</i></button>
+        <div class="faq-a"><strong>Kein PDA · Kein Funk · Kein T-Chat · Kein CL</strong></div>
+      </div>
+    </div>
+
+    <div class="pct-bar"><div class="pct-fill" id="pctfill"></div></div>
+    <div class="pct-label"><span>Bewerber müssen mindestens 80 % richtig beantworten. Nicht erfüllt → nächsten Tag verweisen und Eintrag im Discord.</span><span>80 %</span></div>
+  </section>
+
+</main>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-logo">SAHP</div>
+  <p>Bewerbung · Marc · Michael Kalash</p>
+  <p><strong>ID #243336</strong> · <strong>Discord 0xmarcx0</strong> · <strong>OOC Alter 18</strong></p>
+</footer>
+
+<script>
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible') });
+  }, { threshold: 0.07 });
+  document.querySelectorAll('.sec').forEach(s => obs.observe(s));
+
+  function faq(btn) {
+    const ans = btn.nextElementSibling;
+    const ico = btn.querySelector('.faq-icon');
+    const open = ans.classList.contains('open');
+    document.querySelectorAll('.faq-a.open').forEach(a => a.classList.remove('open'));
+    document.querySelectorAll('.faq-icon.open').forEach(i => i.classList.remove('open'));
+    if (!open) { ans.classList.add('open'); ico.classList.add('open'); }
+  }
+
+  const barObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        document.getElementById('pctfill').style.width = '80%';
+        barObs.disconnect();
+      }
+    });
+  }, { threshold: 0.5 });
+  const bar = document.querySelector('.pct-bar');
+  if (bar) barObs.observe(bar);
+</script>
+
+</body>
+</html>
